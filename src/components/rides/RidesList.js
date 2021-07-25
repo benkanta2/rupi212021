@@ -1,24 +1,36 @@
-import React from 'react';
-import RideCard from './RideCard';
+import React, { useEffect } from "react";
+import RideCard from "./RideCard";
 
-const RidesList = ({ rides, setRides, user }) => {
-	//check if the current user belong to some ride
-	const userHasRide = rides.find((ride) => ride.passengers.includes(user.userId));
+const RidesList = ({ rides, onUpdate, user }) => {
+  //check if the current user belong to some ride
+  let userHasRide = false;
+  let isApproved = false;
+  if (rides.length == 1 && rides[0].isUserRegisterd) {
+    for (let index = 0; index < rides.length; index++) {
+      const userRide = rides[index];
+      if (userRide.Date === rides[0].Date && userRide.IsApproved) {
+        isApproved = true;
+      }
+    }
+    userHasRide = true;
+  }
 
-	const updateRides = (updatedRide) => {
-		const updatedRides = rides.map((ride) => {
-			return ride.id === updatedRide.id ? updatedRide : ride;
-		});
-		setRides(updatedRides);
-	};
+  const renderRides = () => {
+    return rides.map((ride, index) => {
+      return (
+        <RideCard
+          key={index}
+          ride={ride}
+          onUpdate={onUpdate}
+          user={user}
+          userHasRide={userHasRide}
+          isRideApproved={isApproved}
+        />
+      );
+    });
+  };
 
-	const renderRides = () => {
-		return rides.map((ride, index) => {
-			return <RideCard key={index} ride={ride} setRide={updateRides} user={user} userHasRide={userHasRide} />;
-		});
-	};
-
-	return renderRides();
+  return renderRides();
 };
 
 export default RidesList;

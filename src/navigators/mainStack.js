@@ -17,14 +17,7 @@ export const mainStack = (user, setUser) => {
 
 	const headerRight = (navigation) => (
 		<TouchableOpacity onPress={() => navigation.navigate('My Profile', { user: user, setUser: setUser })}>
-			<Image
-				source={user.img}
-				containerStyle={{
-					width: 40,
-					height: 40,
-					borderRadius: 40,
-				}}
-			/>
+		<Icon name="person" type="material" size={30}/>
 		</TouchableOpacity>
 	);
 
@@ -44,7 +37,6 @@ export const mainStack = (user, setUser) => {
 			headerTitleStyle: styles.headerTitleStyle,
 			headerTitleContainerStyle: styles.headerTitleContainerStyle,
 			headerRightContainerStyle: styles.headerRightContainerStyle,
-			headerRight: () => headerRight(navigation),
 		};
 	};
 
